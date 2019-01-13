@@ -58,7 +58,6 @@ export class OrderItemsComponent implements OnChanges {
       data: {order: this.order, orderItems: this.orderItems}
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.changeOccured = false;
     });
   }
   onDeleteItem(orderItem: OrderItems ) {
@@ -78,7 +77,6 @@ export class OrderItemsComponent implements OnChanges {
       data: { message: 'Are you sure you want to delete?'}
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.changeOccured = false;
       if(result === 'yes') {
         this.orderItems.splice(this.orderItems.findIndex(element => element.itemId === orderItem.itemId), 1);
       }
@@ -90,7 +88,8 @@ export class OrderItemsComponent implements OnChanges {
   }
 
 
-  onSaveChanges() {
+  onSaveChanges() {      
+    this.changeOccured = false;
     if(this.orderItems.length == 0) {
       this.alertify.error('basketEmpty');
     } else {

@@ -45,7 +45,7 @@ export class SupplierDetailComponent implements OnChanges {
       this.supplierUpdated.emit(updatedSupplier);
     },
     error => {
-      this.aleritfyService.error('Error: ' + error.error);
+      this.aleritfyService.error(error.error);
       this.getSupplier();
     });
   }

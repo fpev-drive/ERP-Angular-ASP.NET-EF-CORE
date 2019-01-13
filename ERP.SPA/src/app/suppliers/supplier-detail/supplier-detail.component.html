@@ -53,7 +53,7 @@
         <div class="col-md-6">
            <div class="form-group">
                <label>{{"phone"|translate}}</label>
-               <input type="text" class="form-control" name="inputPhone" [(ngModel)]="supplier.phoneNumber" required>
+               <input type="text" pattern="^[1-9]+[0-9]*$" class="form-control" name="inputPhone" [(ngModel)]="supplier.phoneNumber" required>
            </div>
         </div>
       </div>

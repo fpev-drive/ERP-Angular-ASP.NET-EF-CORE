@@ -78,7 +78,7 @@ export class EmployeeDetailComponent implements OnChanges, OnInit {
         this.employeeUpdatedEvent.emit(this.employee);
       },
       error => {
-        this.alertify.error('Error: ' + error.error);
+        this.alertify.error(error.error);
         this.getEmployeeDetail(this.employee.employeeId);
       });
     } else {

@@ -13,7 +13,6 @@ import { Router } from '../../../../node_modules/@angular/router';
   styleUrls: ['./register-employee.component.css']
 })
 
-//TODO
 export class RegisterEmployeeComponent implements OnInit {
   
   employeeToRegister: Employee;
@@ -59,7 +58,7 @@ export class RegisterEmployeeComponent implements OnInit {
       this.employeeToRegister.positionId = this.registerForm.get('position').value.positionId;
       this.authService.register(this.employeeToRegister).subscribe( success => {
         
-        this.alertify.success('createSuccess')
+        this.alertify.success('registerSuccess')
         this.router.navigate(['employees']);
       },
       error => {

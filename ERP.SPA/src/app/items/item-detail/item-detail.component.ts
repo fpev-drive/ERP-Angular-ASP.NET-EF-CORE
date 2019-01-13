@@ -60,7 +60,7 @@ export class ItemDetailComponent implements OnInit {
       this.aleritfyService.success('updateSuccess');
     },
     error => {
-      this.aleritfyService.error('Error: ' + error.error);
+      this.aleritfyService.error(error.error);
       this.getItem();
     });
   }

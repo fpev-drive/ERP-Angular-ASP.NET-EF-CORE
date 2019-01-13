@@ -32,7 +32,7 @@
     "enterPassword": "Jelszó kitöltése kötelező!",
  
     "erp": "Vállalatirányítási Rendszer",
-    "welcome": "Ez a Vállalatirányítási web applikáció a szakdolgozatom részeként jött létre, melyet az Eszterházy Károly Egyetemre készítettem.",
+    "welcome": "Ez a Vállalatirányítási webalkalmazás a szakdolgozatom részeként jött létre, melyet az Eszterházy Károly Egyetemre készítettem.",
     "createdByJordan": "készítette Rigó Jordán",
     "getStarted": "Vágjunk bele!",
     "whatCanYouDoHere": "Mit tudsz csinálni?",
@@ -72,7 +72,7 @@
     "address":"Cím",
     "contactPerson":"Kapcsolattartó",
     "phone": "Telefonszám",
-    "unitCost": "Egység költség",
+    "unitCost": "Egységköltség",
     "leadTime": "Szállítási idő",
     "primarySupplier": "Elsődleges Beszállító",
 
@@ -101,6 +101,7 @@
     "updateSuccess": "Sikeres módosítás!",
     "deleteSuccess": "Sikeres törlés!",
     "createSuccess": "Sikeres létrehozás! Alapértelmezett jelszó: keresztnév kisbetűkkel!",
+    "reigsterSuccess": "Sikeres regisztráció! Alapértelmezett jelszó: keresztnév kisbetűkkel!",
     "supplierAddSuccess": "Beszállító sikeresen hozzáadva az áruhoz",
     "supplierAddError": "Beszállító már hozzá lett adva az áruhoz!",
     "orderCreateSuccess": "Rendelés sikeresen létrehozva",

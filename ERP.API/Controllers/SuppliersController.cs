@@ -53,7 +53,7 @@ namespace ERP.API.Controllers
         {       
             var updatedSupplier = await this.repo.UpdateEntity(supplier);
             if(updatedSupplier == null)
-                return BadRequest("Error change happened");
+                return BadRequest("concurrencyError");
             return Ok(updatedSupplier);
         }
 

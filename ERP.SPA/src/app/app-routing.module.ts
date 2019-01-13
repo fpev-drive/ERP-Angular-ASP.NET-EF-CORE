@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'employees', component: EmployeeListComponent, canActivate: [AuthGuard,PasswordGuard]},
   { path: 'employees/profile', component: EmployeeDetailComponent, canActivate: [AuthGuard,PasswordGuard]},
   { path: 'employees/changepassword', component: EmployeeChangePasswordDialogComponent, canActivate: [AuthGuard,PasswordGuard]},
-  { path: 'register', component: RegisterEmployeeComponent, canActivate: [AuthGuard,PasswordGuard]},
+  { path: 'register', component: RegisterEmployeeComponent},
   { path: 'items', component: ItemListComponent, canActivate: [AuthGuard,PasswordGuard]},
   { path: 'suppliers', component: SupplierListComponent, canActivate: [AuthGuard,PasswordGuard]},
   { path: 'orders', component: OrderListComponent, canActivate: [AuthGuard,PasswordGuard]},

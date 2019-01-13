@@ -108,6 +108,26 @@ namespace ERP.API.Data
         {
             return await this.context.Employees.Include(employee => employee.Position).FirstOrDefaultAsync(employee => employee.EmployeeId == employeeId);
         }
+
+        public async Task<Employee> UpdateEmployee(Employee employeeToUpdate)
+        {
+            var employee = await this.GetEmployee(employeeToUpdate.EmployeeId);
+            for (int i = 0; i < employee.Timestamp.Length; i++)
+            {
+                if(employeeToUpdate.Timestamp[i] != employee.Timestamp[i])
+                    return null;
+            }    
+
+            employee.FirstName = employeeToUpdate.FirstName;
+            employee.LastName = employeeToUpdate.LastName;
+            employee.DateOfBirth = employeeToUpdate.DateOfBirth;
+            employee.Salary = employeeToUpdate.Salary;
+            employee.PositionId = employeeToUpdate.PositionId;
+
+            await this.SaveChangesAsync();
+
+            return employee;
+        }
         public async Task<IEnumerable<Supplier>> GetActiveSuppliers()
         {
             return await this.context.Suppliers.Where(supplier => supplier.Status.Equals(ACTIVE_ENTITY)).ToListAsync();

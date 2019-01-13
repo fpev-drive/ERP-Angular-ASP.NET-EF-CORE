@@ -49,19 +49,12 @@ namespace ERP.API.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateEmployee([FromBody] Employee employeeToUpdate)
         {
-            var employee = await this.repo.GetEmployee(employeeToUpdate.EmployeeId);
-            if(employee == null)
-                return null;
+            var updatedEmployee = await this.repo.UpdateEmployee(employeeToUpdate);
+            if(updatedEmployee == null)
+                return BadRequest("concurrencyError");
+            
+            return Ok(updatedEmployee);
 
-            employee.FirstName = employeeToUpdate.FirstName;
-            employee.LastName = employeeToUpdate.LastName;
-            employee.DateOfBirth = employeeToUpdate.DateOfBirth;
-            employee.Salary = employeeToUpdate.Salary;
-            employee.PositionId = employeeToUpdate.PositionId;
-
-            await this.repo.SaveChangesAsync();
-
-            return Ok();
             //TODO implementalni a szalkezelest!
             // if(updatedEmployee == null)
             //     return BadRequest("The record you are trying to update has been modified!");

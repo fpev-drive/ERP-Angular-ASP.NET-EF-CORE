@@ -1,0 +1,14 @@
+{
+  "ProjectFilePath": "d:\\Projects\\ERP-Angular-ASP.NET-EF-CORE-master\\ERP.API\\ERP.API.csproj",
+  "TargetFramework": "netcoreapp2.0",
+  "TagHelpers": [],
+  "Configuration": {
+    "ConfigurationName": "MVC-2.0",
+    "LanguageVersion": "2.0",
+    "Extensions": [
+      {
+        "ExtensionName": "MVC-2.0"
+      }
+    ]
+  }
+}

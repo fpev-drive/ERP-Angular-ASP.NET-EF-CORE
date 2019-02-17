@@ -20,3 +20,14 @@ D:\Projects\ERP-Angular-ASP.NET-EF-CORE-master\ERP.API\obj\Debug\netcoreapp2.0\E
 D:\Projects\ERP-Angular-ASP.NET-EF-CORE-master\ERP.API\obj\Debug\netcoreapp2.0\ERP.API.AssemblyInfo.cs
 D:\Projects\ERP-Angular-ASP.NET-EF-CORE-master\ERP.API\obj\Debug\netcoreapp2.0\ERP.API.dll
 D:\Projects\ERP-Angular-ASP.NET-EF-CORE-master\ERP.API\obj\Debug\netcoreapp2.0\ERP.API.pdb
+C:\Projects\ERP\ERP.API\bin\Debug\netcoreapp2.0\ERP.API.deps.json
+C:\Projects\ERP\ERP.API\bin\Debug\netcoreapp2.0\ERP.API.runtimeconfig.json
+C:\Projects\ERP\ERP.API\bin\Debug\netcoreapp2.0\ERP.API.runtimeconfig.dev.json
+C:\Projects\ERP\ERP.API\bin\Debug\netcoreapp2.0\ERP.API.dll
+C:\Projects\ERP\ERP.API\bin\Debug\netcoreapp2.0\ERP.API.pdb
+C:\Projects\ERP\ERP.API\obj\Debug\netcoreapp2.0\ERP.API.csprojAssemblyReference.cache
+C:\Projects\ERP\ERP.API\obj\Debug\netcoreapp2.0\ERP.API.csproj.CoreCompileInputs.cache
+C:\Projects\ERP\ERP.API\obj\Debug\netcoreapp2.0\ERP.API.AssemblyInfoInputs.cache
+C:\Projects\ERP\ERP.API\obj\Debug\netcoreapp2.0\ERP.API.AssemblyInfo.cs
+C:\Projects\ERP\ERP.API\obj\Debug\netcoreapp2.0\ERP.API.dll
+C:\Projects\ERP\ERP.API\obj\Debug\netcoreapp2.0\ERP.API.pdb

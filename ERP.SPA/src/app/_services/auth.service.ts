@@ -4,7 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { Position } from './../_models/position.model';
 import {  Headers, RequestOptions, Response } from '@angular/http';
 import { Injectable, OnChanges } from '@angular/core';
-import { Observable } from 'rxjs/Observable'
+import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
@@ -51,7 +52,7 @@ export class AuthService implements OnChanges {
         return this.http.get<Role[]>(environment.baseurl + 'auth/roles/' + employeeId);
     }
 
-    isLoggedIn() {
+    isLoggedIn(): boolean {
         return !this.jwtHelper.isTokenExpired();
     }
 

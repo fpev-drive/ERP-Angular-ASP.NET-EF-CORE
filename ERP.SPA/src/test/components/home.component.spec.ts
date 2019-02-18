@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, tick, fakeAsync, inject } from '@angular/core/testing';
+import { ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 import { HomeComponent } from 'src/app/home/home.component';
 import { AuthService } from 'src/app/_services/auth.service';
 import { LoginComponent } from 'src/app/home/login/login.component';
@@ -97,32 +97,37 @@ describe('HomeComponent', () => {
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
+    describe('isFirstLogin', () => {
+        it('should render employee change password dialog when user is logging in for the first time',() =>{
+            spyOn(window.localStorage, 'getItem').and.callFake( (key:string):String => {
+                return 'true';
+            });
+    
+            fixture.detectChanges();
+            let element = fixture.debugElement.nativeElement;
 
-    it('isLogged in', fakeAsync(() => {
-        let element = fixture.debugElement.nativeElement;
-        authServiceFake.isLoggedIn.and.returnValue(false);
-
-        tick();
-        fixture.detectChanges();
-
-        expect(element.querySelector('app-login')).toBeTruthy();
-    }));
-
-    it('should render employee change password dialog AS it is first login',() =>{
-        spyOn(localStorage, 'getItem').and.callFake( (key:string):String => {
-            return 'true';
+            expect(element.querySelector('app-employee-change-password-dialog')).toBeTruthy();
         });
+    })
 
-        fixture.detectChanges();
-        let element = fixture.debugElement.nativeElement;
-        expect(element.querySelector('app-employee-change-password-dialog')).toBeTruthy();
-    });
+    describe('loggedIn', () => {
+        it('should render login screen when user is not logged in', fakeAsync(() => {
+            let element = fixture.debugElement.nativeElement;
+            authServiceFake.isLoggedIn.and.returnValue(false);
+    
+            tick();
+            fixture.detectChanges();
+    
+            expect(element.querySelector('app-login')).toBeTruthy();
+        }));
 
-    it('should render main home screen as logged in and not first log in', () => {
-        authServiceFake.isLoggedIn.and.returnValue(true);
-        fixture.detectChanges();
-        let element = fixture.nativeElement;
-
-        expect(element.querySelector('#services')).toBeTruthy();
-    });
+        it('should render main home screen when user is logged in and not first log in', () => {
+            authServiceFake.isLoggedIn.and.returnValue(true);
+            
+            fixture.detectChanges();
+            let element = fixture.nativeElement;
+    
+            expect(element.querySelector('#services')).toBeTruthy();
+        });
+    })
 })

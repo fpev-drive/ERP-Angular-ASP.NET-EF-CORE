@@ -33,8 +33,9 @@ import { EmployeeChangePasswordDialogComponent } from 'src/app/employee/employee
 import { RouterTestingModule } from '@angular/router/testing';
 import { MomentModule } from 'ngx-moment';
 import { Position } from '../../../app/_models/position.model';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { detectChanges } from '@angular/core/src/render3';
 
 
 describe('RegisterEmployeeComponent', () => {
@@ -82,7 +83,9 @@ describe('RegisterEmployeeComponent', () => {
             imports: [
                 AppMaterialModule,
                 HttpClientTestingModule,
-                RouterTestingModule,
+                RouterTestingModule.withRoutes([
+                    {path: 'employees', component: HomeComponent}
+                ]),
                 MomentModule,
                 TimepickerModule.forRoot(),
                 TranslateModule.forRoot(),
@@ -98,12 +101,158 @@ describe('RegisterEmployeeComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should exist', fakeAsync(() => {
+    it('should set positions after initialization',() => {
 
-        component.ngOnInit();
-        tick();
+        // component.ngOnInit();
+        // tick();
 
         expect(component.positions).toBe(mockPositions);
-    }));
+    });
 
+    describe('emailInput validation', () => {
+        it('should be true when emailInput is EMPTY', () => {
+            let emailInput = component.registerForm.controls['email'];
+            let errors = emailInput.errors || {};
+    
+            expect(errors['required']).toBeTruthy();
+        });
+    
+        it('should be false when emailInput is NOT empty', () => {
+            let emailInput = component.registerForm.controls['email'];
+    
+            emailInput.setValue('email value is set');
+            let errors = emailInput.errors || {};
+    
+            expect(errors['required']).toBeFalsy();
+        });
+    
+        it('should be true when value is in WRONG format', () => {
+            let emailInput = component.registerForm.controls['email'];
+    
+            emailInput.setValue('value is set');
+            let errors = emailInput.errors || {};
+    
+            expect(errors['email']).toBeTruthy();
+        });
+    
+        it('should be false when value is in CORRECT format', () => {
+            let emailInput = component.registerForm.controls['email'];
+    
+            emailInput.setValue('correct@email.format');
+            let errors = emailInput.errors || {};
+    
+            expect(errors['email']).toBeFalsy();
+        });
+    });
+
+    describe('salary input validation', () => {
+
+        it('should be valid when contains only positive numbers', () => {
+            let salaryInput = component.registerForm.controls['salary'];
+
+            salaryInput.setValue('1234');
+
+            expect(salaryInput.valid).toBeTruthy();
+        })
+
+        it('should be INVALID when contains string', () => {
+            let salaryInput = component.registerForm.controls['salary'];
+
+            salaryInput.setValue('string is given');
+
+            expect(salaryInput.valid).toBeFalsy();
+        })
+
+        it('should be INVALID when contains string', () => {
+            let salaryInput = component.registerForm.controls['salary'];
+
+            salaryInput.setValue('1232 number with string');
+
+            expect(salaryInput.valid).toBeFalsy();
+        })
+
+        it('should be INVALID when contains negative number', () => {
+            let salaryInput = component.registerForm.controls['salary'];
+
+            salaryInput.setValue('-1');
+
+            expect(salaryInput.valid).toBeFalsy();
+        })
+
+        
+
+    });
+    
+    describe('onSubmit method called', () => {
+        it('should call alertify error method ONCE when form is INVALID', () => {
+
+            component.onSubmit();
+    
+            expect(alertifyServiceFake.error).toHaveBeenCalledTimes(1);
+        });
+
+        it('should call elrtify error message with suitable error message when form is INVALID ', () => {
+
+            component.onSubmit();
+
+            expect(alertifyServiceFake.error.calls.argsFor(0)).toContain('You have to fill out all necessary information.');
+        });
+
+        it('form is invalid when empty', () => {
+            expect(component.registerForm.valid).toBeFalsy();
+        });
+
+        it('form is VALID when all input values are given', () => {
+            setAllRegisterFormInpuetValues();
+
+            expect(component.registerForm.valid).toBeTruthy();
+        });
+
+        it('should call AuthService register observable ONCE when form is VALID', () => {
+            setAllRegisterFormInpuetValues();
+            authServiceFake.register.and.returnValue(of(true));
+
+            component.onSubmit();
+
+            expect(authServiceFake.register.calls.count()).toBe(1);
+        });
+
+        it('should call AuthService register observable with suitable parameter when form is VALID', () => {
+            setAllRegisterFormInpuetValues();
+            authServiceFake.register.and.returnValue(of(true));
+
+            component.onSubmit();
+
+            expect(authServiceFake.register).toHaveBeenCalledWith(component.employeeToRegister);
+        });
+
+        it('should call AlertifyService Success method when register is successful', () => {
+            setAllRegisterFormInpuetValues();
+            authServiceFake.register.and.returnValue(of(true));
+
+            component.onSubmit();
+
+            expect(alertifyServiceFake.success).toHaveBeenCalledTimes(1);
+        });
+
+        it('should call AuthService register observable with suitable parameter when form is VALID', () => {
+            setAllRegisterFormInpuetValues();
+            authServiceFake.register.and.returnValue(throwError('error'));
+
+            component.onSubmit();
+
+            expect(alertifyServiceFake.error.calls.count()).toBe(1);
+        });
+    })
+    function setAllRegisterFormInpuetValues() {
+        component.registerForm.get('email').setValue('set@valid.email');
+        component.registerForm.controls['firstName'].setValue('FirstName');
+        component.registerForm.controls['lastName'].setValue('LastName');
+        component.registerForm.get('dateOfBirth').setValue(new Date(19930131));
+        component.registerForm.get('salary').setValue(1000);
+        component.registerForm.controls['position'].setValue(1);
+    }
 })
+
+
+

@@ -12,8 +12,8 @@ import { AlertifyService } from '../../_services/alertify.service';
   styleUrls: ['./employee-list.component.css']
 })
 export class EmployeeListComponent implements OnInit {
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, {static:false}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static:false}) sort: MatSort;
   
   constructor(private authService: AuthService, private alertify: AlertifyService, private router: Router, private employeeService: EmployeeService, private dialog: MatDialog) {}
 

@@ -30,9 +30,9 @@ export class SupplierDetailComponent implements OnChanges {
   }
   getSupplier() {
     
-    this.supplierService.getSupplier(this.supplier.supplierId).subscribe((supplierDetail: Supplier) => {
-      this.supplier = supplierDetail;
-    });
+    // this.supplierService.getSupplier(this.supplier.supplierId).subscribe((supplierDetail: Supplier) => {
+    //   this.supplier = supplierDetail;
+    // });
   }
 
   getStatuses() {

@@ -6,7 +6,6 @@ import { OrderItems } from './../../_models/order-items.model';
 import { OrderService } from './../../_services/order.service';
 import { Order } from './../../_models/order.model';
 import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
-import { SELECT_VALUE_ACCESSOR } from '../../../../node_modules/@angular/forms/src/directives/select_control_value_accessor';
 
 @Component({
   selector: 'app-order-detail',

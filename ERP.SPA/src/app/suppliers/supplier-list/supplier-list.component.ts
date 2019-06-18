@@ -1,4 +1,3 @@
-
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SupplierService } from '../../_services/supplier.service';
 import { Supplier } from '../../_models/supplier.model';
@@ -16,15 +15,14 @@ import { Observable } from 'rxjs/Observable';
 })
 export class SupplierListComponent implements OnInit {
   
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-
-  // suppliers: Observable<{ supplier: Supplier[]}>;
-  suppliers: Supplier[];
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+suppliers :Supplier[];
+  //  suppliers: Observable<{ suppliers: Supplier[]}>
   displayedColumns = ['supplierId', 'name', 'status'];
 
   selectedSupplier;
   constructor(
-    private store: Store<{supplier: {suppliers: Supplier[]}}>,
+    private store: Store<{suppliers: Supplier[]}>,
     private supplierService: SupplierService, 
     private dialog: MatDialog
   ) {}
@@ -41,7 +39,10 @@ export class SupplierListComponent implements OnInit {
   }
 
   getSuppliers() {
-   this.suppliers = this.store.select('supplier');
+    this.store.select('supplier').subscribe(result => {
+      this.suppliers = result;
+   });
+   this.setDataSource();
     // this.supplierService.getSuppliers().subscribe(data => {
     // this.suppliers = data;
     // this.setDataSource();  
@@ -62,7 +63,9 @@ export class SupplierListComponent implements OnInit {
 
   setDataSource() {
     this.dataSource.data = this.suppliers;
+    // this.dataSource.data = this.suppliers;
     this.dataSource.paginator = this.paginator;
+    console.log(this.dataSource);
   }
 
   onSupplier(supplier: any) {
@@ -70,11 +73,11 @@ export class SupplierListComponent implements OnInit {
   }
 
   updateSupplier(updatedSupplier: Supplier) {
-    for (let index = 0; index < this.suppliers.length; index++) {
-      const element = this.suppliers[index];
-      if(element.supplierId === updatedSupplier.supplierId)
-        this.suppliers[index] = updatedSupplier;
-    }
+    // for (let index = 0; index < this.suppliers.length; index++) {
+    //   const element = this.suppliers[index];
+    //   if(element.supplierId === updatedSupplier.supplierId)
+    //     this.suppliers[index] = updatedSupplier;
+    // }
     this.setDataSource();
   }
 }

@@ -17,8 +17,8 @@ import { Order } from '../../_models/order.model';
 })
 export class OrderListComponent implements OnInit {
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, {static:false}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static:false}) sort: MatSort;
 
   orders: Order[];
  

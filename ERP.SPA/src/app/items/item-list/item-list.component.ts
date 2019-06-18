@@ -15,8 +15,8 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class ItemListComponent implements OnInit {
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, {static:false}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static:false}) sort: MatSort;
 
   items: Item[];
  

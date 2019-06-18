@@ -1,5 +1,5 @@
 import { ConfirmationDialogComponent } from './../../ConfirmationDialog/ConfirmationDialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from './../../_services/auth.service';
 import { AlertifyService } from './../../_services/alertify.service';
 import { OrderItems } from './../../_models/order-items.model';

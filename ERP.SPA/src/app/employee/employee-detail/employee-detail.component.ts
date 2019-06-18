@@ -1,5 +1,5 @@
 import { EmployeeChangePasswordDialogComponent } from './../employee-change-password-dialog/employee-change-password-dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from './../../_services/auth.service';
 import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { Employee } from '../../_models/employee.model';

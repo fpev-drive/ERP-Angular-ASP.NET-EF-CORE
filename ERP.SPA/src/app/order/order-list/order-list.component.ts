@@ -3,7 +3,10 @@ import { AuthService } from './../../_services/auth.service';
 import { OrderCreateDialogComponent } from './../order-create-dialog/order-create-dialog.component';
 import { OrderService } from './../../_services/order.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatTableDataSource, MatDialog, MatSort } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 import { Order } from '../../_models/order.model';
 

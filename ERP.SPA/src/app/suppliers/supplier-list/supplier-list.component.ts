@@ -2,8 +2,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SupplierService } from '../../_services/supplier.service';
 import { Supplier } from '../../_models/supplier.model';
-import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { SupplierCreateDialogComponent } from 'src/app/suppliers/supplier-create-dialog/supplier-create-dialog.component';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-supplier-list',
@@ -14,12 +18,16 @@ export class SupplierListComponent implements OnInit {
   
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  suppliers:Supplier[];
- 
+  // suppliers: Observable<{ supplier: Supplier[]}>;
+  suppliers: Supplier[];
   displayedColumns = ['supplierId', 'name', 'status'];
 
   selectedSupplier;
-  constructor(private supplierService: SupplierService, private dialog: MatDialog) {}
+  constructor(
+    private store: Store<{supplier: {suppliers: Supplier[]}}>,
+    private supplierService: SupplierService, 
+    private dialog: MatDialog
+  ) {}
   dataSource = new MatTableDataSource<Supplier>();
   
   applyFilter(filterValue: string) {
@@ -32,22 +40,23 @@ export class SupplierListComponent implements OnInit {
     this.getSuppliers();   
   }
 
+  getSuppliers() {
+   this.suppliers = this.store.select('supplier');
+    // this.supplierService.getSuppliers().subscribe(data => {
+    // this.suppliers = data;
+    // this.setDataSource();  
+    // });
+  }
+
   addSupplier() {
     let dialogRef = this.dialog.open(SupplierCreateDialogComponent, {
       height: '450px',
       width: '1700px',
     }).afterClosed().subscribe(result => {
       if(result != null) {
-        this.suppliers.push(result);
+       // this.suppliers.push(result);
         this.setDataSource();
       }
-    });
-  }
-
-  getSuppliers() {
-    this.supplierService.getSuppliers().subscribe(data => {
-    this.suppliers = data;
-    this.setDataSource();  
     });
   }
 

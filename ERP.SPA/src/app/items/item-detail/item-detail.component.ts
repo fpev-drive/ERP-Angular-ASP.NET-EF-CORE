@@ -3,7 +3,7 @@ import { ItemSuppliersCreateDialogComponent } from './../item-suppliers-create-d
 import { ItemSuppliers } from './../../_models/item-suppliers.model';
 import { ConfirmationDialogComponent } from './../../ConfirmationDialog/ConfirmationDialog.component';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ItemService } from './../../_services/item.service';
 import { AlertifyService } from './../../_services/alertify.service';
 import { Item } from './../../_models/item.model';

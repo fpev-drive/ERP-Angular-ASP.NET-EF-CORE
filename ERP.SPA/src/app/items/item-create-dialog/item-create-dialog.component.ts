@@ -1,5 +1,5 @@
 import { Supplier } from './../../_models/supplier.model';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { ItemService } from './../../_services/item.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';

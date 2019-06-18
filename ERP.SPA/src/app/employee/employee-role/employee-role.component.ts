@@ -5,7 +5,7 @@ import { Employee } from './../../_models/employee.model';
 import { AuthService } from './../../_services/auth.service';
 import { Role } from './../../_models/role.model';
 import { Component, OnInit, OnChanges, Input } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { LanguageService } from '../../_services/language.service';
 

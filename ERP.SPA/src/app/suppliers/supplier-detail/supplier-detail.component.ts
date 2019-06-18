@@ -6,7 +6,7 @@ import { Component, OnInit, OnChanges, Output, EventEmitter } from '@angular/cor
 import { Input } from '@angular/core';
 import { Supplier } from '../../_models/supplier.model';
 import { SupplierService } from '../../_services/supplier.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
 @Component({

@@ -47,9 +47,8 @@ export class RegisterEmployeeComponent implements OnInit {
   }
 
   salaryNumberValidator() {
-
-  var numbers = new RegExp(/^[0-9]+$/);
-  var code = this.registerForm.get('salary').value;
+    var numbers = new RegExp(/^[0-9]+$/);
+    var code = this.registerForm.get('salary').value;
   }
 
   onSubmit() {

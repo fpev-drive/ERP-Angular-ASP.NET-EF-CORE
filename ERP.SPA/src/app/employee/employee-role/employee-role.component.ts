@@ -20,19 +20,21 @@ export class EmployeeRoleComponent implements OnChanges {
 
   changeOccured = false;
   employeeRoles: Role[];
+
   constructor(private language: LanguageService, private authService: AuthService, private dialog: MatDialog, private alertifyService: AlertifyService) { }
 
   ngOnChanges() {
-   this.getEmployeeRoles();
+    this.getEmployeeRoles();
   }
-
-   getCurrentLang() {
-    return this.language.currentLang;
-  }
+  
   getEmployeeRoles() {
     this.authService.getEmployeeRoles(this.employee.employeeId).subscribe((success: Role[]) => {
       this.employeeRoles = success;
     })
+  }
+
+   getCurrentLang() {
+    return this.language.currentLang;
   }
 
   onDeleteRole(role: Role) {
@@ -44,15 +46,19 @@ export class EmployeeRoleComponent implements OnChanges {
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result === 'yes') {
-        this.authService.DeleteEmployeeRole(this.employee.employeeId, role.roleId).subscribe(success => {
-          this.alertifyService.success('deleteSuccess');
-          this.employeeRoles.splice(this.employeeRoles.findIndex(element => element.roleId === role.roleId), 1);
-        },
-        error => {
-          this.alertifyService.error('Error: ' + error.error);
-        });  
+        this.deleteEmployeeRole(role);
       }
     });
+  }
+
+  deleteEmployeeRole(role: Role) {
+    this.authService.DeleteEmployeeRole(this.employee.employeeId, role.roleId).subscribe(() => {
+      this.alertifyService.success('deleteSuccess');
+      this.employeeRoles.splice(this.employeeRoles.findIndex(element => element.roleId === role.roleId), 1);
+    },
+    error => {
+      this.alertifyService.error('Error: ' + error.error);
+    });  
   }
 
   onAddRole() {

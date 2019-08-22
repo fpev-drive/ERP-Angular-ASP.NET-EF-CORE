@@ -12,38 +12,29 @@ import { AlertifyService } from '../../_services/alertify.service';
   styleUrls: ['./employee-list.component.css']
 })
 export class EmployeeListComponent implements OnInit {
-  @ViewChild(MatPaginator, {static:false}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static:false}) sort: MatSort;
-  
-  constructor(private authService: AuthService, private alertify: AlertifyService, private router: Router, private employeeService: EmployeeService, private dialog: MatDialog) {}
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-  createEmployee() {
-    this.router.navigate(['register']);
-  }
-
-
-  employees:Employee[];
- 
-  displayedColumns = ['email', 'firstName', 'lastName', 'position'];
-
+  employees: Employee[];
   selectedEmployee;
 
+  displayedColumns = ['email', 'firstName', 'lastName', 'position'];
   dataSource;
-  
-  applyFilter(filterValue: string) {
-    filterValue = filterValue.trim();
-    filterValue = filterValue.toLowerCase();
-    this.dataSource.filter = filterValue;
+
+  constructor(private authService: AuthService,
+    private alertify: AlertifyService,
+    private router: Router,
+    private employeeService: EmployeeService,
+    private dialog: MatDialog) { }
+
+  ngOnInit() {
+    this.getEmployees();
   }
 
-  ngOnInit() {  
-    this.getEmployees();   
-  }
-  
   getEmployees() {
     this.employeeService.getEmployees().subscribe(data => {
-    this.employees = data;
-    this.setDataSource();  
+      this.employees = data;
+      this.setDataSource();
     });
   }
 
@@ -52,14 +43,24 @@ export class EmployeeListComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
+    this.dataSource.filter = filterValue;
+  }
+
+  createEmployee() {
+    this.router.navigate(['register']);
+  }
 
   onEmployee(employee: any) {
-    if(this.authService.isReadEmployeeDataAllowed()) {
+    if (this.authService.isReadEmployeeDataAllowed()) {
       this.selectedEmployee = employee;
     } else {
       this.alertify.error(this.authService.NO_PERMISSION_ERROR_MESSAGE);
     }
   }
+  
   employeeUpdatedInDetailComponent(updatedEmployee: Employee) {
     let indexOfEmployeeUpdated = this.employees.indexOf(this.selectedEmployee);
     this.employees[indexOfEmployeeUpdated] = updatedEmployee;

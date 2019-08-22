@@ -8,16 +8,13 @@ import { LanguageService } from '../../_services/language.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   emp: any = {};
   constructor(public languageService: LanguageService, private authService: AuthService, private alertify: AlertifyService) { }
 
-  ngOnInit() {
-  }
-
   public login() {
     this.authService.login(this.emp).subscribe(
-      success=> {
+      success => {
         this.alertify.success('loginSuccess');
     },
       error => {

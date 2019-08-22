@@ -4,6 +4,7 @@ import { ItemService } from './../../_services/item.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { SupplierService } from '../../_services/supplier.service';
+import { AlertifyService } from 'src/app/_services/alertify.service';
 
 @Component({
   selector: 'app-item-create-dialog',
@@ -18,10 +19,25 @@ export class ItemCreateDialogComponent implements OnInit {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
-  constructor(private _formBuilder: FormBuilder, private supplierService: SupplierService,private itemService: ItemService, public dialogRef: MatDialogRef<ItemCreateDialogComponent>) { }
+  
+  constructor(private _formBuilder: FormBuilder, 
+    private supplierService: SupplierService,
+    private itemService: ItemService, 
+    public dialogRef: MatDialogRef<ItemCreateDialogComponent>,
+    private alertify: AlertifyService) { }
 
   ngOnInit() {
     this.getActiveSuppliers();
+    this.setUpForm();
+  }
+
+  getActiveSuppliers() {
+    this.supplierService.getActiveSuppliers().subscribe((data: Supplier[]) => {
+      this.suppliers = data;
+    });
+  }
+
+  setUpForm() {
     this.firstFormGroup = this._formBuilder.group({
       supplierCtrl: ['', Validators.required],
       leadTimeCtrl: ['', Validators.required]
@@ -33,14 +49,8 @@ export class ItemCreateDialogComponent implements OnInit {
       retailPriceCtrl: ['', Validators.required],
       unitCostCtrl: ['', Validators.required]
     });
-
   }
 
-  getActiveSuppliers() {
-    this.supplierService.getActiveSuppliers().subscribe(data => {
-      this.suppliers = data;
-    });
-  }
   addNewItem() {
     this.itemToSave = {
       supplierId: this.firstFormGroup.get('supplierCtrl').value.supplierId,
@@ -58,7 +68,7 @@ export class ItemCreateDialogComponent implements OnInit {
       this.addNewItemSuppliers();
     },
     error => {
-      console.log(error);
+      this.alertify.error('Error: ' + error.error);
     });
     this.dialogRef.close(this.itemToSave);
   }
@@ -66,5 +76,4 @@ export class ItemCreateDialogComponent implements OnInit {
   addNewItemSuppliers() {
     this.itemService.createItemSuppliers(this.itemToSave).subscribe();
   }
-
 }

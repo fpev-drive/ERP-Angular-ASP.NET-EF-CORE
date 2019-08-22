@@ -43,9 +43,6 @@ import { EmployeeChangePasswordDialogComponent } from './employee/employee-chang
 import { MomentModule } from 'ngx-moment';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-import {StoreModule} from '@ngrx/store';
-import { supplierReducer } from './suppliers/supplier.reducer';
-
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -98,7 +95,6 @@ export function getToken() {
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
-    StoreModule.forRoot({supplier: supplierReducer}),
     FormsModule,
     JwtModule.forRoot({
       config: {

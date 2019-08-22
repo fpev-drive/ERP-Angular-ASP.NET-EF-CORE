@@ -47,7 +47,11 @@ export class OrderCreateDialogComponent implements OnInit {
   dataSource;
   selection = new SelectionModel<OrderItems>(true, []);
 
-  constructor(private dialogRef: MatDialogRef<OrderCreateDialogComponent>, private supplierService: SupplierService, private itemService: ItemService, private orderService: OrderService, private alertify:AlertifyService) {}
+  constructor(private dialogRef: MatDialogRef<OrderCreateDialogComponent>, 
+    private supplierService: SupplierService, 
+    private itemService: ItemService, 
+    private orderService: OrderService, 
+    private alertify:AlertifyService) {}
 
   ngOnInit() {
     this.getActiveSuppliers();
@@ -55,7 +59,7 @@ export class OrderCreateDialogComponent implements OnInit {
   }
 
   getActiveSuppliers() {
-    this.supplierService.getActiveSuppliers().subscribe(data => {
+    this.supplierService.getActiveSuppliers().subscribe((data: Supplier[]) => {
       this.suppliers = data;
     });
   }

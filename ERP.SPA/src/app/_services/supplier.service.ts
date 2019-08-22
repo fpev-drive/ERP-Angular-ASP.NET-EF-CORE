@@ -11,10 +11,6 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class SupplierService {
-  token = localStorage.getItem('token');
-  headers = new Headers({'Authorization': 'Bearer ' + this.token});
-  option = new RequestOptions({headers: this.headers});
-  //headers.append('Content-type', 'application/json');
  
   constructor(private http: HttpClient) { }
 

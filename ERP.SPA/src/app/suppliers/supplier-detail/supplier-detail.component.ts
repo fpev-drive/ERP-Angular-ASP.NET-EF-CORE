@@ -21,10 +21,14 @@ export class SupplierDetailComponent implements OnChanges {
 
   statuses: string[];
   selectedStatus: string;
-  constructor(private statusService: StatusService, private aleritfyService: AlertifyService, private supplierService: SupplierService, private dialog: MatDialog, private router: Router) { }
+  constructor(private statusService: StatusService, 
+    private aleritfyService: AlertifyService, 
+    private supplierService: SupplierService, 
+    private dialog: MatDialog, 
+    private router: Router) { }
 
   ngOnChanges() {
-    this.getSupplier();
+    //this.getSupplier(); TODO
     this.getStatuses();
 
   }
@@ -38,6 +42,7 @@ export class SupplierDetailComponent implements OnChanges {
   getStatuses() {
     this.statuses = this.statusService.getStatuses();
   }
+  
   updateSupplier() {
     this.supplierService.updateSupplier(this.supplier).subscribe((updatedSupplier: Supplier) => {
       this.supplier = updatedSupplier;

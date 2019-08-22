@@ -19,20 +19,23 @@ export class OrderDetailComponent implements OnChanges {
   orderItems: OrderItems[];
   @Output() orderDeletedEvent = new EventEmitter<Order>();
 
-  constructor(private authService: AuthService, private orderService: OrderService, private alertifyService: AlertifyService, private dialog: MatDialog) { }
+  constructor(private authService: AuthService, 
+    private orderService: OrderService, 
+    private alertifyService: AlertifyService, 
+    private dialog: MatDialog) { }
 
   ngOnChanges() {
     this.getOrderDetails();
   }
 
-  getStatusOfOrder() {
-    return this.order.status;
-  }
-
   getOrderDetails() {
-    this.orderService.getOrderDetails(this.order.orderId).subscribe(data => {
+    this.orderService.getOrderDetails(this.order.orderId).subscribe((data: Order) => {
       this.order = data;  
     });
+  }
+
+  getStatusOfOrder() {
+    return this.order.status;
   }
 
   onDeleteOrder() {

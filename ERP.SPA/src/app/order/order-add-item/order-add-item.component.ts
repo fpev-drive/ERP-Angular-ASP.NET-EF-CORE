@@ -15,16 +15,16 @@ import { AlertifyService } from '../../_services/alertify.service';
 })
 export class OrderAddItemComponent implements OnInit {
 
+  itemSuppliers: ItemSuppliers[];
+  itemsToOrder: OrderItems[] = this.data.orderItems;
+  creationForm: FormGroup;
+  dataSource;
+  selection = new SelectionModel<OrderItems>(true, []);
+
   constructor(private alertify: AlertifyService,
     private itemService: ItemService,
     public dialogRef: MatDialogRef<OrderAddItemComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
-
-
-  itemSuppliers: ItemSuppliers[];
-  itemsToOrder: OrderItems[] = this.data.orderItems;
-  creationForm: FormGroup;
-
 
     displayedColumns = [
       "select",
@@ -34,15 +34,27 @@ export class OrderAddItemComponent implements OnInit {
       "quantity",
       "totalCost"
     ];
-    dataSource;
-    selection = new SelectionModel<OrderItems>(true, []);
 
   ngOnInit() {
     this.createOrderCreationForm();
-    this.itemService.getItemsOfSupplier(this.data.order.supplierId).subscribe(data => {
+    this.getItemsOfSupplier();
+    this.dataSource = new MatTableDataSource<OrderItems>(this.itemsToOrder);
+  }
+
+  createOrderCreationForm() {
+    this.creationForm = new FormGroup({
+      selectedItemSupplier: new FormControl("", [Validators.required]),
+      unitCost: new FormControl({ value: "", disabled: true }, [Validators.required]),
+      quantity: new FormControl("", [Validators.required]),
+      totalCost: new FormControl({ value: "", disabled: true }, [Validators.required]),
+    });
+  }
+
+  getItemsOfSupplier() {
+    this.itemService.getItemsOfSupplier(this.data.order.supplierId).subscribe((data: ItemSuppliers[]) => {
       this.itemSuppliers = data;
     });
-    this.dataSource = new MatTableDataSource<OrderItems>(this.itemsToOrder);
+
   }
  
   onUpdate() {
@@ -52,14 +64,7 @@ export class OrderAddItemComponent implements OnInit {
   onItemSupplierSelected(itemSupplier: ItemSuppliers) {
     this.creationForm.get("unitCost").setValue(itemSupplier.unitCost);
   }
-  createOrderCreationForm() {
-    this.creationForm = new FormGroup({
-      selectedItemSupplier: new FormControl("", [Validators.required]),
-      unitCost: new FormControl({ value: "", disabled: true }, [Validators.required]),
-      quantity: new FormControl("", [Validators.required]),
-      totalCost: new FormControl({ value: "", disabled: true }, [Validators.required]),
-    });
-  }
+
 
   onAddItem() {
     let itemToBeAdded: OrderItems = {
@@ -93,6 +98,7 @@ export class OrderAddItemComponent implements OnInit {
   calculateTotalCost() {
     return this.itemsToOrder.map(t => t.totalCost).reduce((acc, value) => acc + value, 0);
   }
+
   onRemoveItem() {
     this.selection.selected.forEach(item => {
       this.dataSource.data.splice(this.dataSource.data.indexOf(item), 1);
@@ -113,5 +119,4 @@ export class OrderAddItemComponent implements OnInit {
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
   }
-
 }

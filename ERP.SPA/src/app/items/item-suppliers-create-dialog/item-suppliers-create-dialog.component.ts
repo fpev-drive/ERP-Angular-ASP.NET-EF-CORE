@@ -22,14 +22,24 @@ export class ItemSuppliersCreateDialogComponent implements OnInit {
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
   constructor(private alertifyService: AlertifyService,
-              private _formBuilder: FormBuilder, 
-              private supplierService: SupplierService, 
-              private itemService: ItemService, 
-              public dialogRef: MatDialogRef<ItemSuppliersCreateDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public item: Item) { }
+    private _formBuilder: FormBuilder, 
+    private supplierService: SupplierService, 
+    private itemService: ItemService, 
+    public dialogRef: MatDialogRef<ItemSuppliersCreateDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public item: Item) { }
 
   ngOnInit() {
     this.getSuppliers();
+    this.setUpForm();
+  }
+
+  getSuppliers() {
+    this.supplierService.getSuppliers().subscribe((data: Supplier[]) => {
+      this.suppliers = data;
+    });
+  }
+
+  setUpForm() {
     this.firstFormGroup = this._formBuilder.group({
       supplierCtrl: ['', Validators.required],
       leadTimeCtrl: ['', Validators.required]
@@ -37,14 +47,8 @@ export class ItemSuppliersCreateDialogComponent implements OnInit {
     this.secondFormGroup = this._formBuilder.group({
       unitCostCtrl: ['', Validators.required]
     });
- 
   }
 
-  getSuppliers() {
-    this.supplierService.getSuppliers().subscribe(data => {
-      this.suppliers = data;
-    });
-  }
   createNewItemSupplier() {
     let itemSupplierToCreate = {
       itemId: this.item.itemId,
@@ -57,7 +61,7 @@ export class ItemSuppliersCreateDialogComponent implements OnInit {
     }
 
     this.itemService.createItemSuppliers(itemSupplierToCreate).subscribe(
-      data => {
+      success => {
         this.alertifyService.success('supplierAddSuccess');
         this.itemService.itemSuppliers.push(itemSupplierToCreate);
       },

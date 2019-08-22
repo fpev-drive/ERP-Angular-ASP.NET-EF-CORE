@@ -24,7 +24,6 @@ export class OrderItemsComponent implements OnChanges {
   constructor(private alertify: AlertifyService , private orderService: OrderService, private itemService: ItemService,private dialog: MatDialog) { }
 
   ngOnChanges() {
-    // this.getOrderDetails();
     this.changeOccured = false;
     this.getOrderitems();
    }
@@ -50,6 +49,7 @@ export class OrderItemsComponent implements OnChanges {
       this.alertify.error('youNotCreatedOrder');
     }
   }
+
   private openAddItemDialog() {
     this.changeOccured = true;
     let dialogRef = this.dialog.open(OrderAddItemComponent, {
@@ -60,12 +60,17 @@ export class OrderItemsComponent implements OnChanges {
     dialogRef.afterClosed().subscribe(result => {
     });
   }
+
   onDeleteItem(orderItem: OrderItems ) {
     if(this.currentUserCreatedOrder()) {
       this.deleteItem(orderItem);
     } else {
       this.alertify.error('youNotCreatedOrder');
     }
+  }
+
+  private currentUserCreatedOrder() {
+    return this.order.createdBy === +localStorage.getItem('employeeId') ? true : false;
   }
 
   private deleteItem(orderItem: OrderItems) {
@@ -82,11 +87,6 @@ export class OrderItemsComponent implements OnChanges {
       }
     });
   }
-
-  private currentUserCreatedOrder() {
-    return this.order.createdBy === +localStorage.getItem('employeeId') ? true : false;
-  }
-
 
   onSaveChanges() {      
     this.changeOccured = false;

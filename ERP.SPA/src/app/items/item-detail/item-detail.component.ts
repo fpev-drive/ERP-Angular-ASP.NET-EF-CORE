@@ -14,16 +14,17 @@ import { Component, OnInit, Input } from '@angular/core';
   templateUrl: './item-detail.component.html',
   styleUrls: ['./item-detail.component.css']
 })
-export class ItemDetailComponent implements OnInit {
+export class ItemDetailComponent {
 
   @Input() item: Item;
   itemSuppliers: ItemSuppliers[];
-  statuses: string [];
-  constructor(private statusService: StatusService, private aleritfyService: AlertifyService, private itemService: ItemService, private dialog: MatDialog, private router: Router) { }
+  statuses: string[];
 
-  ngOnInit() {
-
-  }
+  constructor(private statusService: StatusService,
+    private aleritfyService: AlertifyService,
+    private itemService: ItemService,
+    private dialog: MatDialog
+  ) { }
 
   ngOnChanges() {
     this.getItem();
@@ -36,21 +37,23 @@ export class ItemDetailComponent implements OnInit {
       this.item = item;
     });
   }
-   getSuppliers() {
-    this.itemService.getItemSuppliers(this.item.itemId).subscribe(data => {
+
+  getSuppliers() {
+    this.itemService.getItemSuppliers(this.item.itemId).subscribe((data: ItemSuppliers[]) => {
       this.itemService.itemSuppliers = data;
       this.itemSuppliers = this.itemService.itemSuppliers;
     });
   }
+
   getStatuses() {
     this.statuses = this.statusService.getStatuses();
   }
 
- addSupplier() {
-  let dialogRef = this.dialog.open(ItemSuppliersCreateDialogComponent, {
-    height: '450px',
-    width: '1700px',
-    data: this.item 
+  addSupplier() {
+    let dialogRef = this.dialog.open(ItemSuppliersCreateDialogComponent, {
+      height: '450px',
+      width: '1700px',
+      data: this.item
     });
   }
 
@@ -59,25 +62,29 @@ export class ItemDetailComponent implements OnInit {
       this.item = success;
       this.aleritfyService.success('updateSuccess');
     },
-    error => {
-      this.aleritfyService.error(error.error);
-      this.getItem();
-    });
+      error => {
+        this.aleritfyService.error(error.error);
+        this.getItem();
+      });
   }
 
-  private onDeleteItemSupplier(itemSupplier: ItemSuppliers) {
+  onDeleteItemSupplier(itemSupplier: ItemSuppliers) {
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       height: '250px',
       width: '500px',
-      data: { message: 'Are you sure you want to delete?'}
+      data: { message: 'Are you sure you want to delete?' }
     });
     dialogRef.afterClosed().subscribe(result => {
-      if(result === 'yes') {
-        this.itemService.deleteItemSupplier(itemSupplier.itemId, itemSupplier.supplierId).subscribe(result => {
-          this.aleritfyService.success('deleteSuccess');
-          this.itemSuppliers.splice(this.itemSuppliers.findIndex(element => element.supplierId === itemSupplier.supplierId), 1);
-        })
+      if (result === 'yes') {
+       this.deleteItemSupplier(itemSupplier);
       }
     });
+  }
+
+  private deleteItemSupplier(itemSupplier: ItemSuppliers) {
+    this.itemService.deleteItemSupplier(itemSupplier.itemId, itemSupplier.supplierId).subscribe(result => {
+      this.aleritfyService.success('deleteSuccess');
+      this.itemSuppliers.splice(this.itemSuppliers.findIndex(element => element.supplierId === itemSupplier.supplierId), 1);
+    })
   }
 }

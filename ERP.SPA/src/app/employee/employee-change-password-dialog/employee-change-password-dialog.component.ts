@@ -24,9 +24,17 @@ export class EmployeeChangePasswordDialogComponent implements OnInit {
 
 
   ngOnInit() {
+    this.getEmployee();
+    this.setUpForm();
+    
+  }
+  getEmployee(): void {
     this.employeeService.getEmployee(+localStorage.getItem('employeeId')).subscribe((success: Employee) => {
       this.employee = success;
     });
+  }
+
+  setUpForm(): void {
     this.form = new FormGroup({
       currentPassword: new FormControl('',[Validators.required, Validators.minLength(4), Validators.maxLength(12)]),
       password: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(12)]),
@@ -46,5 +54,4 @@ export class EmployeeChangePasswordDialogComponent implements OnInit {
       this.alertifyService.error('wrongCurrentPassword');
     })
   }
-
 }

@@ -23,7 +23,7 @@ export class EmployeeDetailComponent implements OnChanges, OnInit {
 
   positions: Position[];
   selectedPosition: Position;
-  isMyProfile:boolean = false;
+  isMyProfile: boolean = false;
   
   constructor(private dialog: MatDialog, private authService: AuthService, private alertify:AlertifyService ,private employeeService: EmployeeService) { }
   

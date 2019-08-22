@@ -21,23 +21,18 @@ export class ItemListComponent implements OnInit {
   items: Item[];
  
   displayedColumns = ['itemId', 'name', 'retailPrice', 'quantityOnHand', 'status'];
+  dataSource = new MatTableDataSource<Item>();
 
   selectedItem;
-  constructor(private itemService: ItemService, private dialog: MatDialog) {}
-  dataSource = new MatTableDataSource<Item>();
-  
-  applyFilter(filterValue: string) {
-    filterValue = filterValue.trim();
-    filterValue = filterValue.toLowerCase();
-    this.dataSource.filter = filterValue;
-  }
 
+  constructor(private itemService: ItemService, private dialog: MatDialog) {}
+  
   ngOnInit() {  
     this.getItems();   
   }
 
   getItems() {
-    this.itemService.getItems().subscribe(data => {
+    this.itemService.getItems().subscribe((data: Item[]) => {
     this.items = data;
     this.setDataSource();  
     });
@@ -47,6 +42,12 @@ export class ItemListComponent implements OnInit {
     this.dataSource.data = this.items;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+  
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
+    this.dataSource.filter = filterValue;
   }
 
   onItem(item: any) {

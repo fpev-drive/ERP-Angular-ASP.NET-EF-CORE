@@ -25,21 +25,19 @@ export class OrderListComponent implements OnInit {
   displayedColumns = ['orderId',  'status', 'supplierName', 'requestedDate', 'totalCost'];
 
   selectedOrder;
-  constructor(private orderService: OrderService, private dialog: MatDialog, private authService: AuthService, private alertifyService: AlertifyService) {}
   dataSource = new MatTableDataSource<Order>();
-  
-  applyFilter(filterValue: string) {
-    filterValue = filterValue.trim();
-    filterValue = filterValue.toLowerCase();
-    this.dataSource.filter = filterValue;
-  }
+
+  constructor(private orderService: OrderService, 
+    private dialog: MatDialog, 
+    private authService: AuthService, 
+    private alertifyService: AlertifyService) {}
 
   ngOnInit() {  
     this.getOrders();   
   }
 
   getOrders() {
-    this.orderService.getOrders().subscribe(data => {
+    this.orderService.getOrders().subscribe((data: Order[]) => {
       this.orders = data;
       this.setDataSource();  
     });
@@ -51,10 +49,15 @@ export class OrderListComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
+    this.dataSource.filter = filterValue;
+  }
+
   onOrderSelected(order: any) {
     this.selectedOrder = order;
   }
-
 
   addOrder() {
     if(this.authService.isPurchaseAllowed()) {
@@ -67,7 +70,6 @@ export class OrderListComponent implements OnInit {
           this.setDataSource();
         }
       });
-
     } else {
       this.alertifyService.error(this.authService.NO_PERMISSION_ERROR_MESSAGE);
     }

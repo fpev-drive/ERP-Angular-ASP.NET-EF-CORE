@@ -16,9 +16,17 @@ export class SupplierCreateDialogComponent implements OnInit {
   thirdFormGroup: FormGroup;
 
   supplierToSaveToDb: Supplier;
-  constructor(private alertify: AlertifyService, private _formBuilder: FormBuilder, private supplierService: SupplierService, public dialogRef: MatDialogRef<SupplierCreateDialogComponent>) { }
+
+  constructor(private alertify: AlertifyService, 
+    private _formBuilder: FormBuilder, 
+    private supplierService: SupplierService, 
+    public dialogRef: MatDialogRef<SupplierCreateDialogComponent>) { }
 
   ngOnInit() {
+    this.setUpForm();
+  }
+
+  setUpForm() {
     this.firstFormGroup = this._formBuilder.group({
       nameCtrl: ['', Validators.required]
     });
@@ -51,5 +59,4 @@ export class SupplierCreateDialogComponent implements OnInit {
     });
     this.dialogRef.close(this.supplierToSaveToDb);
   }
-
 }

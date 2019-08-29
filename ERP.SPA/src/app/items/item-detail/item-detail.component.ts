@@ -34,7 +34,7 @@ export class ItemDetailComponent {
 
   getItem() {
     this.itemService.getItem(this.item.itemId).subscribe((item: Item) => {
-      this.item = item;
+      this.item = Object.assign(this.item, item);
     });
   }
 

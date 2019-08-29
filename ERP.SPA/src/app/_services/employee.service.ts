@@ -19,6 +19,6 @@ export class EmployeeService {
   }
 
   updateEmployee(employeeToUpdate: Employee) {
-    return this.http.put(environment.baseurl + 'employees', employeeToUpdate);
+    return this.http.put<Employee>(environment.baseurl + 'employees', employeeToUpdate);
   }
 }

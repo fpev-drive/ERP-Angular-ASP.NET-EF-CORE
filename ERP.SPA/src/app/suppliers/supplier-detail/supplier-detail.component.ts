@@ -28,15 +28,15 @@ export class SupplierDetailComponent implements OnChanges {
     private router: Router) { }
 
   ngOnChanges() {
-    //this.getSupplier(); TODO
+    this.getSupplier();
     this.getStatuses();
 
   }
   getSupplier() {
     
-    // this.supplierService.getSupplier(this.supplier.supplierId).subscribe((supplierDetail: Supplier) => {
-    //   this.supplier = supplierDetail;
-    // });
+    this.supplierService.getSupplier(this.supplier.supplierId).subscribe((supplierDetail: Supplier) => {
+      this.supplier = Object.assign(this.supplier, supplierDetail);
+    });
   }
 
   getStatuses() {

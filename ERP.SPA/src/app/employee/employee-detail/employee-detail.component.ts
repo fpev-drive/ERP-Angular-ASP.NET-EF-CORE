@@ -52,8 +52,8 @@ export class EmployeeDetailComponent implements OnChanges, OnInit {
   }
 
     getEmployeeDetail(employeeId: number) {
-    this.employeeService.getEmployee(employeeId).subscribe((data: Employee) => {
-      this.employee = data;
+    this.employeeService.getEmployee(employeeId).subscribe((employeeDetail: Employee) => {
+      this.employee = Object.assign(this.employee, employeeDetail);
       this.setSelectedPosition();
     });
   }
@@ -73,8 +73,9 @@ export class EmployeeDetailComponent implements OnChanges, OnInit {
     this.employee.positionName = this.selectedPosition.positionName;
 
     if(this.authService.isUpdateEmployeeDataAllowed()) {
-      this.employeeService.updateEmployee(this.employee).subscribe(success => {
+      this.employeeService.updateEmployee(this.employee).subscribe((updatedEmployee: Employee) => {
         this.alertify.success('updateSuccess');
+        this.employee.timestamp = updatedEmployee.timestamp;
         this.employeeUpdatedEvent.emit(this.employee);
       },
       error => {

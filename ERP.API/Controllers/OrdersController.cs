@@ -25,7 +25,7 @@ namespace ERP.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetOrders() 
+        public async Task<IActionResult> GetOrdersAsync() 
         {
             var orders = await this.repository.GetOrders();
             var ordersToReturn = this.mapper.Map<IEnumerable<OrderListDto>>(orders);
@@ -33,7 +33,7 @@ namespace ERP.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetOrder(int id) 
+        public async Task<IActionResult> GetOrderAsync(int id) 
         {
             var order = await this.repository.GetOrder(id);
             var orderToReturn = this.mapper.Map<OrderDetailDto>(order);
@@ -41,7 +41,7 @@ namespace ERP.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteOrder(int id) 
+        public async Task<IActionResult> DeleteOrderAsync(int id) 
         {
             var orderToDelete =  await this.repository.GetOrder(id);
             if(orderToDelete != null) {
@@ -52,7 +52,7 @@ namespace ERP.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateOrder([FromBody] Order orderToCreate) 
+        public async Task<IActionResult> CreateOrderAsync([FromBody] Order orderToCreate) 
         {
             if(orderToCreate != null)
             {
@@ -62,7 +62,7 @@ namespace ERP.API.Controllers
             return BadRequest();
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateOrder([FromBody] Order orderToUpdate)
+        public async Task<IActionResult> UpdateOrderAsync([FromBody] Order orderToUpdate)
         {
             var updatedOrder = await this.repository.UpdateEntity(orderToUpdate);
             if(updatedOrder == null)
@@ -71,7 +71,7 @@ namespace ERP.API.Controllers
         }
 
         [HttpPut("approve")]
-        public async Task<IActionResult> ApproveOrder([FromBody] Order orderToUpdate)
+        public async Task<IActionResult> ApproveOrderAsync([FromBody] Order orderToUpdate)
         {
             orderToUpdate.Status = "Approved";
             var updatedOrder = await this.repository.UpdateEntity(orderToUpdate);
@@ -101,8 +101,9 @@ namespace ERP.API.Controllers
             }
         }
 
+//TODO receiverOrder approveOrder??
         [HttpPut("receive")]
-        public async Task<IActionResult> ReceiveOrder([FromBody] Order orderToUpdate)
+        public async Task<IActionResult> ReceiveOrderAsync([FromBody] Order orderToUpdate)
         {
             orderToUpdate.Status = "Received";
             orderToUpdate.ReceivedDate = DateTime.Parse(DateTime.Now.ToString("MM/dd/yyyy HH:mm"));

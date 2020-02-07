@@ -62,8 +62,7 @@ namespace ERP.API.Data
             employee.PasswordHash = passwordHash;
             employee.PasswordSalt = passwordSalt;
 
-            await this.context.Employees.AddAsync(employee);
-            await context.SaveChangesAsync();
+            await Add(employee);
             return employee;
         }
 

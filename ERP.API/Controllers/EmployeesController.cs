@@ -1,17 +1,11 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using ERP.API.Data;
-using ERP.API.DTOs;
 using ERP.API.DTOs.EmployeeDtos;
-using ERP.API.DTOs.SupplierDtos;
 using ERP.API.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace ERP.API.Controllers
 {
@@ -28,7 +22,7 @@ namespace ERP.API.Controllers
 
         }
         [HttpGet]
-        public async Task<IActionResult> GetEmployees()
+        public async Task<IActionResult> GetEmployeesAsync()
         {
             var employees = await this.repo.GetEmployees();
             var employeesToReturn = mapper.Map<IEnumerable<EmployeeListDto>>(employees);
@@ -36,29 +30,24 @@ namespace ERP.API.Controllers
         }
 
         [HttpGet("{employeeId}")]
-        public async Task<IActionResult> GetEmployee(int employeeId)
+        public async Task<IActionResult> GetEmployeeAync(int employeeId)
         {
             var employee = await this.repo.GetEmployee(employeeId);
-            if(employee == null)
+            if (employee == null)
                 return NotFound("The employee is not found");
             var employeeToReturn = this.mapper.Map<EmployeeDetailedDto>(employee);
-            
-            return Ok(employeeToReturn);
+
+            return Ok(employee);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateEmployee([FromBody] Employee employeeToUpdate)
+        [HttpPut("{employeeId}")]
+        public async Task<IActionResult> UpdateEmployeeAsync(int employeeId, [FromBody] Employee employeeToUpdate)
         {
-            var updatedEmployee = await this.repo.UpdateEmployee(employeeToUpdate);
-            if(updatedEmployee == null)
+            var updatedEmployee = await this.repo.UpdateEntity(employeeToUpdate);
+            if (updatedEmployee == null)
                 return BadRequest("concurrencyError");
-            
-            return Ok(updatedEmployee);
 
-            //TODO implementalni a szalkezelest!
-            // if(updatedEmployee == null)
-            //     return BadRequest("The record you are trying to update has been modified!");
-            //return Ok(updatedEmployee);
+            return Ok(updatedEmployee);
         }
     }
 }

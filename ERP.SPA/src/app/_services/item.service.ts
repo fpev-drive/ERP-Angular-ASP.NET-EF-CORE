@@ -11,38 +11,38 @@ export class ItemService {
   constructor(private http: HttpClient) {}
 
   getItems() {
-    return this.http.get<Item[]>(environment.baseurl + 'items');
+    return this.http.get<Item[]>(`${environment.baseurl}/items`);
   }
 
   getActiveItems() {
-    return this.http.get<Item[]>(environment.baseurl + 'items/active');
+    return this.http.get<Item[]>(`${environment.baseurl}/items/active`);
   }
 
   getItem(itemId: number) {
-    return this.http.get<Item>(environment.baseurl + 'items/' + itemId);
+    return this.http.get<Item>(`${environment.baseurl}/items/${itemId}`);
   }
 
    getItemSuppliers(itemId: number) {
-    return this.http.get<ItemSuppliers[]>(environment.baseurl + 'itemSuppliers/' + itemId);
+    return this.http.get<ItemSuppliers[]>(`${environment.baseurl}/itemSuppliers/${itemId}`);
   }
 
   getItemsOfSupplier(supplierId: number) {
-    return this.http.get<ItemSuppliers[]>(environment.baseurl + 'itemSuppliers/supplierId/' + supplierId);
+    return this.http.get<ItemSuppliers[]>(`${environment.baseurl}/itemSuppliers/supplier/${supplierId}`);
   }
 
   createItem(itemToCreate) {
-    return this.http.post(environment.baseurl + 'items', itemToCreate);
+    return this.http.post(`${environment.baseurl}/items`, itemToCreate);
   }
 
   createItemSuppliers(itemSuppliersToCreate) {
-    return this.http.post(environment.baseurl + 'itemSuppliers', itemSuppliersToCreate);
+    return this.http.post(`${environment.baseurl}/itemSuppliers`, itemSuppliersToCreate);
   }
 
   deleteItemSupplier(itemId: number, supplierId: number) {
-    return this.http.delete(environment.baseurl + 'itemSuppliers/' + itemId + '/' + supplierId);
+    return this.http.delete(`${environment.baseurl}/itemSuppliers/${itemId}/${supplierId}`);
   }
 
-  updateItem(itemToTupdate) {
-    return this.http.put(environment.baseurl + 'items', itemToTupdate);
+  updateItem(itemToTupdate: Item) {
+    return this.http.put(`${environment.baseurl}/items/${itemToTupdate.itemId}`, itemToTupdate);
   }
 }

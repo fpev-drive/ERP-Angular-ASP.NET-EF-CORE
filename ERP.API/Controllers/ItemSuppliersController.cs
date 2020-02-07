@@ -24,15 +24,15 @@ namespace ERP.API.Controllers
             this.repository = repository;
         }
         [HttpGet("{itemId}")]
-        public async Task<IActionResult> GetItemSuppliers(int itemId) 
+        public async Task<IActionResult> GetItemSuppliersAsync(int itemId) 
         {   
             var itemSuppliers = await this.repository.GetItemSuppliers(itemId);
             var itemSuppliersToReturn = mapper.Map<IEnumerable<ItemSupplierDto>>(itemSuppliers);
             return Ok(itemSuppliersToReturn);
         }
 
-        [HttpGet("supplierId/{supplierId}")]
-        public async Task<IActionResult> GetItemsOfSupplier(int supplierId)
+        [HttpGet("supplier/{supplierId}")]
+        public async Task<IActionResult> GetItemsOfSupplierAsync(int supplierId)
         {
             var itemsOfSupplier = await this.repository.GetItemsOfSupplier(supplierId);
             var itemSuppliersToReturn = mapper.Map<IEnumerable<ItemSupplierDto>>(itemsOfSupplier);
@@ -41,7 +41,7 @@ namespace ERP.API.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> CreateItemSuppliers([FromBody] ItemSupplier itemSupplier)
+        public async Task<IActionResult> CreateItemSuppliersAsync([FromBody] ItemSupplier itemSupplier)
         {
             var item =  await this.repository.GetItemSupplier(itemSupplier.ItemId, itemSupplier.SupplierId);
             if(item != null)
@@ -53,7 +53,7 @@ namespace ERP.API.Controllers
         }
 
         [HttpDelete("{itemId}/{supplierId}")]
-        public async Task<IActionResult> DeleteItemSupplier(int itemId, int supplierId)
+        public async Task<IActionResult> DeleteItemSupplierAsync(int itemId, int supplierId)
         {
             var itemSupplier = await this.repository.GetItemSupplier(itemId, supplierId);
             if(itemSupplier == null)

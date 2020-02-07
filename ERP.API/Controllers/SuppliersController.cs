@@ -26,7 +26,7 @@ namespace ERP.API.Controllers
 
         }
         [HttpGet]
-        public async Task<IActionResult> GetSuppliers()
+        public async Task<IActionResult> GetSuppliersAsync()
         {
             var suppliers = await this.repo.GetSuppliers();
             var suppliersToReturn = mapper.Map<IEnumerable<SupplierListDto>>(suppliers);
@@ -34,7 +34,7 @@ namespace ERP.API.Controllers
         }
 
         [HttpGet("active")]
-        public async Task<IActionResult> GetActiveSuppliers()
+        public async Task<IActionResult> GetActiveSuppliersAsync()
         {
             var suppliers = await this.repo.GetActiveSuppliers();
             var suppliersToReturn = mapper.Map<IEnumerable<SupplierListDto>>(suppliers);
@@ -42,14 +42,14 @@ namespace ERP.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetSupplier(int id)
+        public async Task<IActionResult> GetSupplierAsync(int id)
         {
             var supplier = await this.repo.GetSupplier(id);
             return Ok(supplier);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateSupplier([FromBody] Supplier supplier)
+        public async Task<IActionResult> UpdateSupplierAsync(int id, [FromBody] Supplier supplier)
         {       
             var updatedSupplier = await this.repo.UpdateEntity(supplier);
             if(updatedSupplier == null)
@@ -58,7 +58,7 @@ namespace ERP.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateSupplier([FromBody] Supplier supplier)
+        public async Task<IActionResult> CreateSupplierAsync([FromBody] Supplier supplier)
         {
             var createdSupplier =await this.repo.Add(supplier);
             if(createdSupplier == null)
@@ -68,7 +68,7 @@ namespace ERP.API.Controllers
         }
         
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSupplier(int id)
+        public async Task<IActionResult> DeleteSupplierAsync(int id)
         {
             var supplierToDelete =  await this.repo.GetSupplier(id);
             if(supplierToDelete != null) {

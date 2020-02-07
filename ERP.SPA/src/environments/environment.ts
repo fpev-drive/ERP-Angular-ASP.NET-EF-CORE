@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  baseurl: 'http://localhost:5000/api/',
+  baseurl: 'http://localhost:5000/api',
   production: false,
   noPermissionErrorMessage: 'You do NOT have permission for this operation!'
 };

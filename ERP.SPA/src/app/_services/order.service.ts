@@ -12,35 +12,35 @@ export class OrderService {
   constructor(private http: HttpClient) { }
 
   getOrders() {
-    return this.http.get<Order[]>(environment.baseurl + 'Orders');
+    return this.http.get<Order[]>(`${environment.baseurl}/Orders`);
   }
 
   getOrderDetails(orderId: number) {
-    return this.http.get<Order>(environment.baseurl + 'Orders/' + orderId);
+    return this.http.get<Order>(`${environment.baseurl}/Orders/${orderId}`);
   }
 
   updateOrder(orderToUpdate: Order) {
-    return this.http.put(environment.baseurl + 'orders/' + orderToUpdate.orderId, orderToUpdate);
+    return this.http.put(`${environment.baseurl}/orders/${orderToUpdate.orderId}`, orderToUpdate);
   }
 
   deleteOrder(orderToDelete: Order) {
-    return this.http.delete(environment.baseurl + 'orders/' + orderToDelete.orderId);
+    return this.http.delete(`${environment.baseurl}/orders/${orderToDelete.orderId}`);
   }
 
   approveOrder(orderToApprove: Order) {
-    return this.http.put(environment.baseurl + 'orders/approve', orderToApprove);
+    return this.http.put(`${environment.baseurl}/orders/approve`, orderToApprove);
   }
 
   receiveOrder(orderToReceive: Order) {
-    return this.http.put(environment.baseurl + 'orders/receive', orderToReceive);
+    return this.http.put(`${environment.baseurl}/orders/receive`, orderToReceive);
   }
 
   createOrder(orderToCreate: Order) {
-    return this.http.post(environment.baseurl + 'orders', orderToCreate);
+    return this.http.post(`${environment.baseurl}/orders`, orderToCreate);
   }
   
   getOrderItems(orderId: number) {
-    return this.http.get<OrderItems[]>(environment.baseurl + 'OrderItems/' + orderId).map(orderItems => {
+    return this.http.get<OrderItems[]>(`${environment.baseurl}/OrderItems/${orderId}`).map(orderItems => {
       orderItems.forEach(element => {
         element.totalCost = element.quantity *  element.unitCost;
       });
@@ -49,14 +49,14 @@ export class OrderService {
   }
   
   createOrderItem(itemsOfOrderToCreate: OrderItems[]) {
-    return this.http.post(environment.baseurl + 'orderItems', itemsOfOrderToCreate);
+    return this.http.post(`${environment.baseurl}/orderItems`, itemsOfOrderToCreate);
   }
 
   updateOrderItem(orderItemsToUpdate: OrderItems[], orderId: number) {
-    return this.http.put(environment.baseurl + 'orderItems/' + orderId , orderItemsToUpdate);
+    return this.http.put(`${environment.baseurl}/orderItems/${orderId}` , orderItemsToUpdate);
   }
 
   removeOrderItem(orderId: number, itemId: number) {
-    return this.http.delete(environment.baseurl + 'orderItems/' + orderId + '/' + itemId);
+    return this.http.delete(`${environment.baseurl}/orderItems/${orderId}/${itemId}`);
   }
 }

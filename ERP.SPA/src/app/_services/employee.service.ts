@@ -11,14 +11,14 @@ export class EmployeeService {
   constructor(private http: HttpClient) { }
 
   getEmployees() {
-    return this.http.get<Employee[]>(environment.baseurl + 'employees');
+    return this.http.get<Employee[]>(`${environment.baseurl}/employees`);
   }
 
   getEmployee(employeeId: number) {
-    return this.http.get<Employee>(environment.baseurl + 'employees/' + employeeId);
+    return this.http.get<Employee>(`${environment.baseurl}/employees/${employeeId}`);
   }
 
   updateEmployee(employeeToUpdate: Employee) {
-    return this.http.put<Employee>(environment.baseurl + 'employees', employeeToUpdate);
+    return this.http.put<Employee>(`${environment.baseurl}/employees/${employeeToUpdate.employeeId}`, employeeToUpdate);
   }
 }

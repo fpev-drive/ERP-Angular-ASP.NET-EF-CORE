@@ -51,9 +51,9 @@ export class EmployeeDetailComponent implements OnChanges, OnInit {
     this.getEmployeeDetail(this.employee.employeeId);
   }
 
-    getEmployeeDetail(employeeId: number) {
+  getEmployeeDetail(employeeId: number) {
     this.employeeService.getEmployee(employeeId).subscribe((employeeDetail: Employee) => {
-      this.employee = Object.assign(this.employee, employeeDetail);
+      this.employee = employeeDetail;
       this.setSelectedPosition();
     });
   }

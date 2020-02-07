@@ -109,9 +109,9 @@ namespace ERP.API.Data
             return await this.context.Employees.Include(employee => employee.Position).FirstOrDefaultAsync(employee => employee.EmployeeId == employeeId);
         }
 
-        public async Task<Employee> UpdateEmployee(Employee employeeToUpdate)
+        public async Task<Employee> UpdateEmployee(int employeeId, Employee employeeToUpdate)
         {
-            var employee = await this.GetEmployee(employeeToUpdate.EmployeeId);
+            var employee = await this.GetEmployee(employeeId);
             for (int i = 0; i < employee.Timestamp.Length; i++)
             {
                 if(employeeToUpdate.Timestamp[i] != employee.Timestamp[i])

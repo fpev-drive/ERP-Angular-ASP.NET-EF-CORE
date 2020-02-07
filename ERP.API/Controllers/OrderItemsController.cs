@@ -21,7 +21,7 @@ namespace ERP.API.Controllers
             this.repository = repository;
         }
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetOrderItems(int id) 
+        public async Task<IActionResult> GetOrderItemsAsync(int id) 
         {
             var orderItems = await this.repository.GetOrderItems(id);
             if(orderItems == null)
@@ -32,14 +32,14 @@ namespace ERP.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateOrderItems([FromBody] List<OrderItem> orderItemToCreate) 
+        public async Task<IActionResult> CreateOrderItemsAsync([FromBody] List<OrderItem> orderItemToCreate) 
         {
             await this.repository.AddOrderItem(orderItemToCreate);
             return Ok();
         }
 
         [HttpPut("{orderId}")]
-        public async Task<IActionResult> UpdateOrderItems([FromBody] List<OrderItem> orderitemsToUpdate, int orderId)
+        public async Task<IActionResult> UpdateOrderItemsAsync(int orderId, [FromBody] List<OrderItem> orderitemsToUpdate) 
         {
            var succeeded = await this.repository.UpdateOrderItems(orderitemsToUpdate, orderId);
            if(!succeeded)
@@ -49,7 +49,7 @@ namespace ERP.API.Controllers
         }
 
         [HttpDelete("{orderId}/{itemId}")]
-        public async Task<IActionResult> RemoveOrderItems(int orderId, int itemId)
+        public async Task<IActionResult> RemoveOrderItemsAsync(int orderId, int itemId)
         {
             var orderItemsToDelete =  await this.repository.GetSingleOrderItems(orderId, itemId);
 

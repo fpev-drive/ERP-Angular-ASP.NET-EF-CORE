@@ -23,7 +23,7 @@ namespace ERP.API.Controllers
         }
       
         [HttpGet]
-        public async Task<IActionResult> GetItems()
+        public async Task<IActionResult> GetItemsAsync()
         {
             var items = await this.repository.GetItems();
             var itemsToReturn = mapper.Map<IEnumerable<ItemListDto>>(items);
@@ -31,7 +31,7 @@ namespace ERP.API.Controllers
         }
 
         [HttpGet("active")]
-        public async Task<IActionResult> GetActiveItems()
+        public async Task<IActionResult> GetActiveItemsAsync()
         {
             var items = await this.repository.GetActiveItems();
             var itemsToReturn = mapper.Map<IEnumerable<ItemListDto>>(items);
@@ -39,14 +39,14 @@ namespace ERP.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetItem(int id)
+        public async Task<IActionResult> GetItemAsync(int id)
         {
             var item = await this.repository.GetItem(id);
             return Ok(item);
        }
 
         [HttpPost]
-        public async Task<IActionResult> CreateItem([FromBody] Item item)
+        public async Task<IActionResult> CreateItemAsync([FromBody] Item item)
         {
             var itemCreated = await this.repository.Add(item);
             if(itemCreated == null)
@@ -54,8 +54,8 @@ namespace ERP.API.Controllers
                 return Ok(item);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Updateitem([FromBody] Item itemToUpdate)
+        [HttpPut("{itemId}")]
+        public async Task<IActionResult> UpdateItemAsync([FromBody] Item itemToUpdate)
         {
             var updatedItem = await this.repository.UpdateEntity(itemToUpdate);
             if(updatedItem == null)

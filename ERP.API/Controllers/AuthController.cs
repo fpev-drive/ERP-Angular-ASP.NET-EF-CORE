@@ -27,14 +27,14 @@ namespace ERP.API.Controllers
         }
 
         [HttpGet("positions")]
-        public async Task<IActionResult> GetPositions()
+        public async Task<IActionResult> GetPositionsAsync()
         {
             var positions = await this.repo.GetPositions();
             return Ok(positions);
         }
 
         [HttpGet("roles/{id}")]
-        public async Task<IActionResult> GetEmployeeRoles(int id)
+        public async Task<IActionResult> GetEmployeeRolesAsync(int id)
         {
             var employeeRoles = await this.repo.GetEmployeeRoles(id);
             var employeeRolesToReturn = this.mapper.Map<IEnumerable<EmployeeRoleDto>>(employeeRoles);
@@ -42,7 +42,7 @@ namespace ERP.API.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] EmployeeRegisterDto dto)
+        public async Task<IActionResult> RegisterAsync([FromBody] EmployeeRegisterDto dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -69,7 +69,7 @@ namespace ERP.API.Controllers
         }
 
         [HttpPost("changepassword")]
-        public async Task<IActionResult> ChangePassword([FromBody] EmployeeChangePasswordDto dto)
+        public async Task<IActionResult> ChangePasswordAsync([FromBody] EmployeeChangePasswordDto dto)
         {
             byte[] passwordHash, passwordSalt;
             var employee = await this.repo.VerifyEmployee(dto.Email, dto.currentPassword);
@@ -89,7 +89,7 @@ namespace ERP.API.Controllers
 
         }
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] EmployeeLoginDto employeeLoginDto)
+        public async Task<IActionResult> LoginAsync([FromBody] EmployeeLoginDto employeeLoginDto)
         {
             var employee = await this.repo.VerifyEmployee(employeeLoginDto.Email, employeeLoginDto.Password);
             if (employee == null)
@@ -121,7 +121,7 @@ namespace ERP.API.Controllers
         }
 
         [HttpDelete("{employeeId}/{roleId}")]
-        public async Task<IActionResult> DeleteEmployeeRole(int employeeId, int roleId)
+        public async Task<IActionResult> DeleteEmployeeRoleAsync(int employeeId, int roleId)
         {   
             var employeeRole = await this.repo.GetSingleEmployeeRole(employeeId, roleId);
          if(employeeRole != null)
@@ -134,13 +134,13 @@ namespace ERP.API.Controllers
         }
       
         [HttpGet("availableroles/{employeeId}")]
-        public async Task<IActionResult> GetRolesThatEmployeeNotHave(int employeeId)
+        public async Task<IActionResult> GetRolesThatEmployeeNotHaveAsync(int employeeId)
         {
             var roles = await this.repo.GetRolesThatEmployeeNotHave(employeeId);
             return Ok(roles);
         }
         [HttpPost("employeerole")]
-        public async Task<IActionResult> CreateEmployeeRole([FromBody]EmployeeRole employeeRole)
+        public async Task<IActionResult> CreateEmployeeRoleAsync([FromBody]EmployeeRole employeeRole)
         {
             var createdEmployeeRole = await this.repo.Add(employeeRole);
             if(createdEmployeeRole == null)

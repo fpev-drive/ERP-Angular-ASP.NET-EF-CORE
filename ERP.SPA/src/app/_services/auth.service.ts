@@ -25,11 +25,11 @@ export class AuthService implements OnChanges {
         
     }
     register(emp: any) {
-        return this.http.post(environment.baseurl + 'auth/register', emp);
+        return this.http.post(`${environment.baseurl}/auth/register`, emp);
     }
 
     login(emp: any) {
-        return this.http.post(environment.baseurl + 'auth/login',emp).map(token => {
+        return this.http.post(`${environment.baseurl}/auth/login`,emp).map(token => {
         localStorage.setItem('token', token['tokenString']);
         localStorage.setItem('isFirstLogin', token['isFirstLogin']);
         this.employeeRoles = token['employeeRolesToReturn'];
@@ -41,15 +41,15 @@ export class AuthService implements OnChanges {
     }
 
     changePassword(email: string, currentPassword: string, newPassword) {
-        return this.http.post(environment.baseurl + 'auth/changepassword', {email, currentPassword, newPassword});
+        return this.http.post(`${environment.baseurl}/auth/changepassword`, {email, currentPassword, newPassword});
     }
 
     getPositions() {
-        return this.http.get<Position[]>(environment.baseurl + 'auth/positions');
+        return this.http.get<Position[]>(`${environment.baseurl}/auth/positions`);
     }
 
     getEmployeeRoles(employeeId: number) {
-        return this.http.get<Role[]>(environment.baseurl + 'auth/roles/' + employeeId);
+        return this.http.get<Role[]>(`${environment.baseurl}/auth/roles/${employeeId}`);
     }
 
     isLoggedIn(): boolean {
@@ -57,14 +57,14 @@ export class AuthService implements OnChanges {
     }
 
     DeleteEmployeeRole(employeeId: number, roleId: number) {
-        return this.http.delete(environment.baseurl + 'auth/' + employeeId + '/' + roleId);
+        return this.http.delete(`${environment.baseurl}/auth/${employeeId}/${roleId}`);
     }
 
     createEmployeeRole(employeeId: number, roleId: number) {
-        return this.http.post(environment.baseurl + 'auth/employeerole', {employeeId, roleId});
+        return this.http.post(`${environment.baseurl}/auth/employeerole`, {employeeId, roleId});
     }
     GetRolesThatEmployeeNotHave(employeeId: number) {
-        return this.http.get<Role[]>(environment.baseurl + 'auth/availableroles/' + employeeId);
+        return this.http.get<Role[]>(`${environment.baseurl}/auth/availableroles/${employeeId}`);
     }
 
     isPurchaseAllowed() {
